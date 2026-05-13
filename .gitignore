@@ -1,0 +1,8 @@
+start.ipynb
+requirements.txt
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+trash.txt
+.env
+data/
