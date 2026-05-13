@@ -1,0 +1,2 @@
+source /Users/skaiyrin/GenAi/scijo_nlp/scijonlp26/.venv/bin/activate
+
