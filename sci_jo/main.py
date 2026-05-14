@@ -1,4 +1,9 @@
-from sci_jo.data_loader import load_pubmed_articles
+import os, sys
+try:
+    from sci_jo.data_loader import load_pubmed_articles
+except ImportError as e:
+    print(f"Error importing data_loader: {e}")
+    sys.exit(1)
 
 def main():
     df = load_pubmed_articles()

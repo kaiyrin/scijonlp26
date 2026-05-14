@@ -3,14 +3,8 @@ from dotenv import load_dotenv
 import pandas as pd
 from Bio import Entrez, Medline
 from typing import Mapping, Any, Sequence
-import json
 import random
-import xml.etree.ElementTree as ET #to parse xml, ET for parsing not like text but like a docuntn
-from sklearn.feature_extraction import text
-from sklearn.feature_extraction.text import TfidfVectorizer
 
-CUSTOM_STOPWORDS = text.ENGLISH_STOP_WORDS- {"no", "not", "without"}
-vectorizer = TfidfVectorizer(ngram_range=(1,1), stop_words=CUSTOM_STOPWORDS, max_features=10000)
 
 load_dotenv()
 
@@ -20,23 +14,14 @@ EMAIL = os.getenv("EMAIL")
 Entrez.email = EMAIL
 Entrez.api_key = NCBI_API_KEY
 
-def clean_title(text: str) -> str:
+def clean_text(text: str) -> str:
     text = str(text)
-    text = str(text).lower()
     text = text.replace("\n", " ")
     text = text.replace("\t", " ")
-    text = text.replace(".", " ")
     text = re.sub(r"\s+", " ", text)
-
     return text.strip()
-def clean_abstract(text: str) -> str:
-    text = str(text).lower()
-    text = text.replace("\n", " ").replace("\t", " ")
-    text = re.sub(r"\[[0-9,\s-]+\]", " ", text)
-    text = re.sub(r"[{}<>:=^~`|\\/@#$*+]", " ", text)
-    text = re.sub(r"[^a-z0-9\s\-]", " ", text)
-    tokens = vectorizer.build_analyzer()(text)
-    return " ".join(tokens)
+    return text.strip()
+
 
 def load_pubmed_articles(): 
     handle = Entrez.esearch(
@@ -61,7 +46,7 @@ def load_pubmed_articles():
 
     # sample 1000 IDs
     random.seed(42)
-    sample_size = min(2000g, len(id_list))
+    sample_size = min(2000, len(id_list))
     sampled_ids = random.sample(id_list, sample_size)
 
     print("Sample size:", len(sampled_ids))
@@ -88,8 +73,8 @@ def load_pubmed_articles():
             if not title or not abstract:
                 continue
 
-            title = clean_title(title)
-            abstract = clean_abstract(abstract)
+            title = clean_text(title)
+            abstract = clean_text(abstract)
 
             doi = ""
 
