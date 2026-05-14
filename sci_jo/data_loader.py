@@ -1,0 +1,124 @@
+import os, re
+from dotenv import load_dotenv
+import pandas as pd
+from Bio import Entrez, Medline
+from typing import Mapping, Any, Sequence
+import json
+import random
+import xml.etree.ElementTree as ET #to parse xml, ET for parsing not like text but like a docuntn
+from sklearn.feature_extraction import text
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+CUSTOM_STOPWORDS = text.ENGLISH_STOP_WORDS- {"no", "not", "without"}
+vectorizer = TfidfVectorizer(ngram_range=(1,1), stop_words=CUSTOM_STOPWORDS, max_features=10000)
+
+load_dotenv()
+
+NCBI_API_KEY = os.getenv("NCBI_API_KEY")
+EMAIL = os.getenv("EMAIL")
+
+Entrez.email = EMAIL
+Entrez.api_key = NCBI_API_KEY
+
+def clean_title(text: str) -> str:
+    text = str(text)
+    text = str(text).lower()
+    text = text.replace("\n", " ")
+    text = text.replace("\t", " ")
+    text = text.replace(".", " ")
+    text = re.sub(r"\s+", " ", text)
+
+    return text.strip()
+def clean_abstract(text: str) -> str:
+    text = str(text).lower()
+    text = text.replace("\n", " ").replace("\t", " ")
+    text = re.sub(r"\[[0-9,\s-]+\]", " ", text)
+    text = re.sub(r"[{}<>:=^~`|\\/@#$*+]", " ", text)
+    text = re.sub(r"[^a-z0-9\s\-]", " ", text)
+    tokens = vectorizer.build_analyzer()(text)
+    return " ".join(tokens)
+
+def load_pubmed_articles(): 
+    handle = Entrez.esearch(
+        db="pubmed",
+        term='''
+        "Lancet Psychiatry"[Journal]
+        AND ("2014/01/01"[PDAT] : "2026/05/01"[PDAT])
+        AND english[Language]
+        ''',
+        retmax=5000
+    )
+    record = Entrez.read(handle)
+
+    count = int(record.get("Count", 0))
+    print(count)
+
+    record_map: Mapping[str, Any] = record if isinstance(record, Mapping) else {}
+    id_list = record_map.get("IdList")
+    if not isinstance(id_list, Sequence) or isinstance(id_list, (str, bytes)) or len(id_list) == 0:
+        raise ValueError("No PMC IDs returned from Entrez search")
+    print(id_list[:5])  #first 5
+
+    # sample 1000 IDs
+    random.seed(42)
+    sample_size = min(2000g, len(id_list))
+    sampled_ids = random.sample(id_list, sample_size)
+
+    print("Sample size:", len(sampled_ids))
+    print("First 5 sampled IDs:", sampled_ids[:5])
+
+    # fetch sampled articles in batches
+    rows = []
+
+    for i in range(0, len(sampled_ids), 100):
+        batch = sampled_ids[i:i + 100]
+        fetch_handle = Entrez.efetch(
+            db="pubmed",
+            id=",".join(batch),
+            rettype="medline",
+            retmode="text"
+        )
+        records = Medline.parse(fetch_handle)
+
+        for rec in records:
+
+            title = rec.get("TI", "")
+            abstract = rec.get("AB", "")
+
+            if not title or not abstract:
+                continue
+
+            title = clean_title(title)
+            abstract = clean_abstract(abstract)
+
+            doi = ""
+
+            for aid in rec.get("AID", []):
+
+                if "[doi]" in aid.lower():
+
+                    doi = aid.replace(" [doi]", "")
+                    break
+
+            rows.append({
+
+                "pmid": rec.get("PMID", ""),
+                "title": title,
+                "abstract": abstract,
+                "year": str(rec.get("DP", ""))[:4],
+                "doi": doi,
+                "authors": "; ".join(rec.get("AU", [])),
+                "journal": rec.get("JT", "")
+
+            })
+
+    df = pd.DataFrame(rows)
+
+    print(df.head())
+    print("Final dataframe shape:", df.shape)
+
+    df.to_csv("data/sampled_lancet_psychiatry_1000.csv", index=False)
+    return df
+
+if __name__ == "__main__":
+    load_pubmed_articles()

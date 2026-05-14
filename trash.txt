@@ -1,2 +1,83 @@
 source /Users/skaiyrin/GenAi/scijo_nlp/scijonlp26/.venv/bin/activate
 
+kallistrateanicita@gmail.com
+I chose psychitric aS FIELD WITH DEFINED BU PRETTY BLURED AND AIM AND SCOPE BECUSE FOR THE JOURNAL AIMED IN MORE SPECIFC FIELD SUCH AS ORTHOPEDIC, ONCOLOGY EVEN DIABITIES JOURNAL FROM FIST HAND SCEAMING DOES IN FACT LOOK FIR INTO THE TOPIC AND COMNTAIN WIDLY SOEIFC TERMS APPRORATE FOR THAT FIELD ONLY WHEREAS THE SCINTIFC MEDICAL JOURNALS IN PSYCHIATRY AND PSYCOLOGY HAVE MORE CROSS TOPIC TERMS BUT DECIDED TO STOP PSIACHOIATRY NOT PSYCOLOGY BECAUSE SEEM EVEN MORE VAGUE AND THE MASKING AND GENRAL SIMILAIRTY SEARCH WOULD GIVE A LOT PRESEMUBLE FALSE POSITIVE RESULTS BECASUE OF MANY COMMON DESCRIPTIVE LANGUAGE BUT DIFFERENT TOPICS. SO I FELT PSYCHIATRY AS SWEET SPOT. AND MNALY I chose LANCET PSYATRY JOURNAL (https://www.thelancet.com/lanpsy/about & https://www.sciencedirect.com/journal/the-lancet-psychiatry) FOR ITS EXTREMLY SELECTIVE PEER REVIEWD WITH HIGH EXPERTNESS IN CLINIC PSYCIATRIY AND ALSO GIVING VISON OF TREATMENT POLIEC SO BCOVERING DIFERNT DIRECTION WITHIN THE FILD AND THE MOST IMPORTNT FOR MY ANALYSIS HAVING GREAT DIGITAL ACESS NAD FILLED FORMS WITH LITTLE NO NO NA PARTS. IN THE SITE ITS WRITTEN THE SUBJECT AREAS ARE "Biological Psychiatry, Clinical Psychology, Psychiatry and Mental Health, Public Health and Health Policy"[LINK: https://www.sciencedirect.com/journal/the-lancet-psychiatry/about/insights] SO ITS WIDE RANGE ENOGH FOR ANALYZING BUT STIL WITH VERY DEFINED VBROFDER BETWEEN EACH TOPIC. AND FINIDN GTHEIR SIMILAITY TO THE SCOPE WITH SUCH A DIFERENT TOPICS COVERED BYT THOSE SCOPE WOULD BE VERY INTERESTING WORK.
+
+THE AIM AND SCOPE OF LANCET PSYCHIATRY :
+
+Aims & Scope
+
+The Lancet Psychiatry is an authoritative forum for key opinion leaders across medicine, government, and health systems to influence clinical practice, explore global policy, and inform constructive, positive change worldwide. The journal publishes clinical research, expert reviews, and provocative comment and opinion in mental health, providing a clear, independent perspective about the clinical advances and practice-changing research shaping clinical psychiatry.
+
+The Lancet Psychiatry publishes papers that reflect the rich variety of ongoing clinical research, including psychopharmacology, psychotherapy and psychosocial approaches to all psychiatric disorders, across the life course. The journal covers innovative treatments and the biological research underpinning such developments, novel methods of service delivery, and new ways of thinking about mental illness promoted by social psychiatry. The journal also advocates strongly for the rights of people with mental health disorders and highlights the voices of service users.[LINK:https://www.sciencedirect.com/journal/the-lancet-psychiatry ]
+
+___________
+Aims and scope
+A world-leading psychiatry journal
+The Lancet Psychiatry publishes original research that advocates change in, or illuminates, psychiatric practice. Topics considered by the journal include psychopharmacology, psychotherapy, and psychosocial approaches to all psychiatric disorders, across the life course. We cover innovative treatments and the biological research underpinning such developments, novel methods of service delivery, and new ways of thinking about mental illness promoted by social psychiatry.
+
+We also advocate strongly for the rights of people with mental illnesses and welcome the voices of service users.
+
+We publish a range of article types that encompass all aspects of psychiatry: Articles, Review, Personal View, Comment, and Correspondence. We also publish Series and Commissions that aim to shape and drive positive change in clinical practice and health policy in areas of need in psychiatry. Learn more about the types of papers we publish. [LINK:https://www.thelancet.com/lanpsy/about]
+
+___________
+The Lancet Psychiatry is an authoritative forum for key opinion leaders across medicine, government, and health systems to influence clinical practice, explore global policy, and inform constructive, positive change worldwide. The journal publishes clinical research, expert reviews, and provocative comment and opinion in mental health, providing a clear, independent perspective about the clinical advances and practice-changing research shaping clinical psychiatry.
+
+The Lancet Psychiatry publishes papers that reflect the rich variety of ongoing clinical research, including psychopharmacology, psychotherapy and psychosocial approaches to all psychiatric disorders, across the life course. The journal covers innovative treatments and the biological research underpinning such developments, novel methods of service delivery, and new ways of thinking about mental illness promoted by social psychiatry. The journal also advocates strongly for the rights of people with mental health disorders and highlights the voices of service users.
+Subject areas
+Biological Psychiatry, Clinical Psychology, Psychiatry and Mental Health, Public Health and Health Policy
+[LINK: https://www.sciencedirect.com/journal/the-lancet-psychiatry/about/aims-and-scope]
+
+_______________________________________________________-
+DATA_;OADER.PRETTYroject Context:
+----------------
+This dataset will later be used to:
+1. Compare article abstracts with the journal "Aims & Scope"
+2. Compute embedding similarity
+3. Perform masking sensitivity analysis
+4. Detect thematic drift and outlier papers
+
+Dataset Output:
+---------------
+Creates:
+    data/raw/lancet_psychiatry_2018_2026.jsonl
+    data/raw/lancet_psychiatry_2018_2026.csv
+
+Fields:
+-------
+- pmcid
+- pmid
+- doi
+- title
+- abstract
+- year
+- journal
+
+Features:
+---------
+✔ English-only filtering
+✔ Random sampling up to 1000 articles
+✔ Clean modular design
+✔ Robust XML parsing
+✔ Reproducible sampling
+✔ PMC API best practices
+✔ Logging
+✔ Error handling
+_______________________________________________________
+STEP 2 — Text Preprocessing
+
+THIS is the important part.
+
+For embeddings, preprocessing should be LIGHT.
+
+Modern transformer embeddings WANT natural language.
+
+Do NOT:
+
+stemming
+heavy lemmatization
+removing all stopwords
+aggressive cleaning
+
+That destroys semantics.
+_______________________________________________________

@@ -6,3 +6,5 @@ __pycache__/
 trash.txt
 .env
 data/
+trash.txt
+start.ipynb
