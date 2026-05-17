@@ -25,9 +25,9 @@ def embeddings_1(csv_path: str, aim_path: str):
     aim_embedding = sbert_model.encode([aim_text], convert_to_numpy=True)[0]
 
     # emerge embeddings inside oriignal dataframe
-    df["embedding_1"] = pd.Series(list(articles_embeddings_1), index=df.index, dtype=object)
-    print(df.head(5))
-    print(df.shape)
+    #df["embedding_1"] = pd.Series(list(articles_embeddings_1), index=df.index, dtype=object)
+    #print(df.head(5))
+    #print(df.shape)
     
     # save aim embedding separately (important!)
     np.save("data/aim_embedding.npy", aim_embedding)
