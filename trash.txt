@@ -1,7 +1,17 @@
-source /Users/skaiyrin/GenAi/scijo_nlp/scijonlp26/.venv/bin/activate
 python -m sci_jo.main
+source /Users/skaiyrin/GenAi/scijo_nlp/scijonlp26/.venv/bin/activate
 
-
+1. Embedding -> took code from here [LINK: https://github.com/huggingface/sentence-transformers]
+work similarity by topics 
+1 frequency based [tdif],pbag of words] - less userful because wide scope of the journal, and in articles mostly highlight words like dosease, psichiatry and other terms rather sematically compare thematic
+2. prediction based [word2vec, fasttext, glove,sbert] -- more suitable
+contextual based -- more nuanced words relation too extensive for terms that is used insie the same scope and mostly ay down for the same context
+1.wordvec(by google) 1. cbow, 2.skifgram
+2. gkove (stanford)
+SBERT-symantic similairtythat combines both conetx with frequency and understand how semntically simil they are. 
++lightweight +open sources +could be fine tuned +no payment for a model [we find the chucnk the most similar to users text user querry]
+all-MiniLM-L6-v2 -- This is a sentence-transformers model: It maps sentences & paragraphs to a 384 dimensional dense vector space and can be used for tasks like clustering or semantic search. [LINK: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2]
+sentence and short paragraph encoder - perfect ofr absctracta and aima nd scope 
 kallistrateanicita@gmail.com
 I chose psychitric aS FIELD WITH DEFINED BU PRETTY BLURED AND AIM AND SCOPE BECUSE FOR THE JOURNAL AIMED IN MORE SPECIFC FIELD SUCH AS ORTHOPEDIC, ONCOLOGY EVEN DIABITIES JOURNAL FROM FIST HAND SCEAMING DOES IN FACT LOOK FIR INTO THE TOPIC AND COMNTAIN WIDLY SOEIFC TERMS APPRORATE FOR THAT FIELD ONLY WHEREAS THE SCINTIFC MEDICAL JOURNALS IN PSYCHIATRY AND PSYCOLOGY HAVE MORE CROSS TOPIC TERMS BUT DECIDED TO STOP PSIACHOIATRY NOT PSYCOLOGY BECAUSE SEEM EVEN MORE VAGUE AND THE MASKING AND GENRAL SIMILAIRTY SEARCH WOULD GIVE A LOT PRESEMUBLE FALSE POSITIVE RESULTS BECASUE OF MANY COMMON DESCRIPTIVE LANGUAGE BUT DIFFERENT TOPICS. SO I FELT PSYCHIATRY AS SWEET SPOT. AND MNALY I chose LANCET PSYATRY JOURNAL (https://www.thelancet.com/lanpsy/about & https://www.sciencedirect.com/journal/the-lancet-psychiatry) FOR ITS EXTREMLY SELECTIVE PEER REVIEWD WITH HIGH EXPERTNESS IN CLINIC PSYCIATRIY AND ALSO GIVING VISON OF TREATMENT POLIEC SO BCOVERING DIFERNT DIRECTION WITHIN THE FILD AND THE MOST IMPORTNT FOR MY ANALYSIS HAVING GREAT DIGITAL ACESS NAD FILLED FORMS WITH LITTLE NO NO NA PARTS. IN THE SITE ITS WRITTEN THE SUBJECT AREAS ARE "Biological Psychiatry, Clinical Psychology, Psychiatry and Mental Health, Public Health and Health Policy"[LINK: https://www.sciencedirect.com/journal/the-lancet-psychiatry/about/insights] SO ITS WIDE RANGE ENOGH FOR ANALYZING BUT STIL WITH VERY DEFINED VBROFDER BETWEEN EACH TOPIC. AND FINIDN GTHEIR SIMILAITY TO THE SCOPE WITH SUCH A DIFERENT TOPICS COVERED BYT THOSE SCOPE WOULD BE VERY INTERESTING WORK.
 

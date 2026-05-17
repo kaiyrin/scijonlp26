@@ -104,6 +104,10 @@ def load_pubmed_articles():
 
     df.to_csv("data/sampled_lancet_psychiatry_1000.csv", index=False)
     return df
-
+def aim_load(file_path: str) -> str:
+   with open(file_path, "r", encoding="utf-8") as f:
+        return f.read()
+   return clean_text(text)
 if __name__ == "__main__":
     load_pubmed_articles()
+    aim_load("data/aim_scope.txt")
