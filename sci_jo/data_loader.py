@@ -45,18 +45,18 @@ def load_pubmed_articles():
     print(id_list[:5])  #first 5
 
     # sample 1000 IDs
-    random.seed(42)
-    sample_size = min(2000, len(id_list))
-    sampled_ids = random.sample(id_list, sample_size)
+    #random.seed(42)
+    #sample_size = min(2000, len(id_list))
+    #sampled_ids = random.sample(id_list, sample_size)
 
-    print("Sample size:", len(sampled_ids))
-    print("First 5 sampled IDs:", sampled_ids[:5])
+    #print("Sample size:", len(sampled_ids))
+    #print("First 5 sampled IDs:", sampled_ids[:5])
 
     # fetch sampled articles in batches
     rows = []
 
-    for i in range(0, len(sampled_ids), 100):
-        batch = sampled_ids[i:i + 100]
+    for i in range(0, len(id_list), 100):
+        batch = id_list[i:i + 100]
         fetch_handle = Entrez.efetch(
             db="pubmed",
             id=",".join(batch),
@@ -70,8 +70,8 @@ def load_pubmed_articles():
             title = rec.get("TI", "")
             abstract = rec.get("AB", "")
 
-            if not title or not abstract:
-                continue
+            #if not abstract:
+               # continue
 
             title = clean_text(title)
             abstract = clean_text(abstract)
@@ -102,7 +102,7 @@ def load_pubmed_articles():
     print(df.head())
     print("Final dataframe shape:", df.shape)
 
-    df.to_csv("data/sampled_lancet_psychiatry_1000.csv", index=False)
+    df.to_csv("data/sampled_lancet_psychiatry_all.csv", index=False)
     return df
 def aim_load(file_path: str) -> str:
    with open(file_path, "r", encoding="utf-8") as f:

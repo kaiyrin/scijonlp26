@@ -3,18 +3,14 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-def compute_similarity(
-    
-    article_emb_path="data/article_embeddings.npy",
-    aim_emb_path="data/aim_embedding.npy"
-):
+def compute_similarity(article_emb_path:str, aim_emb_path:str):
 
     
 
     article_embeddings = np.load(article_emb_path)
     aim_embedding = np.load(aim_emb_path)
 
-    # reshape for sklearn
+    # reshape for sklearn because journal size (519,384) aim size (384,) needs to be (1,384 for cosine_similarity to work)
     aim_embedding = aim_embedding.reshape(1, -1)
 
     # cosine similarity
@@ -25,4 +21,4 @@ def compute_similarity(
 
 
 if __name__ == "__main__":
-    compute_similarity()
+    compute_similarity("data/article_embeddings.npy", "data/aim_embedding.npy"  )
