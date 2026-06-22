@@ -1,15 +1,13 @@
-from sci_jo.embedding import embeddings_1
+from embedding import embeddings_1
 import umap.umap_ as umap
 import hdbscan
 import numpy as np
 from bertopic import BERTopic
 
-article_emb_path = "data/article_embeddings.npy" #for debuggin only then move it to main
-aim_emb_path = "data/aim_embedding.npy"#for debuggin only then move it to main
 
-def umap_articles(article_emb_path, aim_emb_path):  #code source https://umap-learn.readthedocs.io/en/latest/basic_usage.html#penguin-data
-    article_embeddings = np.load(article_emb_path)
-    aim_embedding = np.load(aim_emb_path)
+def umap_articles(article_emb_path: str, aim_emb_path: str):  #code source https://umap-learn.readthedocs.io/en/latest/basic_usage.html#penguin-data
+    article_embeddings = np.load(article_emb_path) if isinstance(article_emb_path, (str, bytes, np.str_, np.bytes_)) else article_emb_path
+    aim_embedding = np.load(aim_emb_path) if isinstance(aim_emb_path, (str, bytes, np.str_, np.bytes_)) else aim_emb_path
 
     aim_matrix = aim_embedding.reshape(1, -1) #(0,1)  # reshape for sklearn because journal size (519,384) aim size (384,) needs to be (1,384 for cosine_similarity to work)
     all_vectors = np.vstack([article_embeddings, aim_matrix])#(520,384)

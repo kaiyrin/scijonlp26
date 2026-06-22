@@ -7,7 +7,7 @@ import numpy as np
 sbert_model = SentenceTransformer("all-MiniLM-L6-v2") #https://github.com/huggingface/sentence-transformers
 
 
-def embeddings_1(csv_path: str, aim_path: str):
+def embeddings_1(csv_path: str, aim_path: str, article_embeddings_path: str, aim_embedding_path: str):
 
     df = pd.read_csv(csv_path)
     article_texts_1 = (df["title"] + " " + df["abstract"]).fillna("").tolist()
@@ -16,7 +16,7 @@ def embeddings_1(csv_path: str, aim_path: str):
     articles_embeddings_1 = sbert_model.encode(
         article_texts_1, show_progress_bar=True, convert_to_numpy=True
     )
-    np.save("data/article_embeddings.npy", articles_embeddings_1)
+    np.save(article_embeddings_path, articles_embeddings_1)
     print(articles_embeddings_1.shape)
     # load aim text
     with open(aim_path, "r", encoding="utf-8") as f:
@@ -41,4 +41,4 @@ def embeddings_1(csv_path: str, aim_path: str):
 
 
 if __name__ == "__main__":
-    embeddings_1("data/sampled_lancet_psychiatry_1000.csv", "data/aim_scope.txt")
+    embeddings_1("data/sampled_lancet_psychiatry_1000.csv", "data/aim_scope.txt", "data/article_embeddings.npy", "data/aim_embedding.npy")

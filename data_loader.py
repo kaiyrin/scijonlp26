@@ -3,14 +3,10 @@ from dotenv import load_dotenv
 import pandas as pd
 from Bio import Entrez, Medline
 from typing import Mapping, Any, Sequence
-import random
-
 
 load_dotenv()
-
 NCBI_API_KEY = os.getenv("NCBI_API_KEY")
 EMAIL = os.getenv("EMAIL")
-
 Entrez.email = EMAIL
 Entrez.api_key = NCBI_API_KEY
 
@@ -20,10 +16,10 @@ def clean_text(text: str) -> str:
     text = text.replace("\t", " ")
     text = re.sub(r"\s+", " ", text)
     return text.strip()
-    return text.strip()
+  
 
 
-def load_pubmed_articles(): 
+def load_pubmed_articles(output_csv_path: str): 
     handle = Entrez.esearch(
         db="pubmed",
         term='''
@@ -102,12 +98,13 @@ def load_pubmed_articles():
     print(df.head())
     print("Final dataframe shape:", df.shape)
 
-    df.to_csv("data/sampled_lancet_psychiatry_all.csv", index=False)
+    df.to_csv(output_csv_path, index=False)
     return df
 def aim_load(file_path: str) -> str:
    with open(file_path, "r", encoding="utf-8") as f:
-        return f.read()
-   return clean_text(f.read())
+       content = f.read()
+   return clean_text(content)
 if __name__ == "__main__":
-    load_pubmed_articles()
-    aim_load("data/aim_scope.txt")
+    # provide an output path when running as a script
+    df = load_pubmed_articles(output_csv_path="output.csv")
+    _ = aim_load("data/aim_scope.txt")
