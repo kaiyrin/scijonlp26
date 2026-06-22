@@ -107,7 +107,7 @@ def load_pubmed_articles():
 def aim_load(file_path: str) -> str:
    with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
-   return clean_text(text)
+   return clean_text(f.read())
 if __name__ == "__main__":
     load_pubmed_articles()
     aim_load("data/aim_scope.txt")

@@ -5,7 +5,7 @@ import pandas as pd
 from sci_jo.data_loader import load_pubmed_articles
 from sci_jo.embedding import embeddings_1
 from sci_jo.similarity import compute_similarity
-
+from sci_jo.berttopic import  umap_articles
 
 def main():
 
@@ -33,7 +33,7 @@ def main():
 
 
     #UMAP
-    
+    umap_articles(article_embeddings, aim_embedding)
 
 
 if __name__ == "__main__":

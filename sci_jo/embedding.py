@@ -1,7 +1,7 @@
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 import numpy as np
-from transformers import DFinePreTrainedModel
+
 
 
 sbert_model = SentenceTransformer("all-MiniLM-L6-v2") #https://github.com/huggingface/sentence-transformers
