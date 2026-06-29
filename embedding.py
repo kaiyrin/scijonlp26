@@ -30,7 +30,7 @@ def embeddings_1(csv_path: str, aim_path: str, article_embeddings_path: str, aim
     #print(df.shape)
     
     # save aim embedding separately (important!)
-    np.save("data/aim_embedding.npy", aim_embedding)
+    np.save(aim_embedding_path, aim_embedding)
 
    
    
