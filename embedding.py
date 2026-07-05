@@ -10,7 +10,11 @@ sbert_model = SentenceTransformer("all-MiniLM-L6-v2") #https://github.com/huggin
 def embeddings_1(csv_path: str, aim_path: str, article_embeddings_path: str, aim_embedding_path: str):
 
     df = pd.read_csv(csv_path)
-    article_texts_1 = (df["title"] + " " + df["abstract"]).fillna("").tolist()
+    article_texts_1 = (
+        df["title"].fillna("")
+        + " "
+        + df["abstract"].fillna("")
+    ).str.strip().tolist()
 
     # embeddings for articles ebeding as vectors here shape=(519, 384)
     articles_embeddings_1 = sbert_model.encode(

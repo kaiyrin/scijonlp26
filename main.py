@@ -79,7 +79,11 @@ def main():
     articles_df = pd.read_csv(
         WORKING_DATA
         ) #checked that this is the same as the one used for embeddings and similarity
-    docs = (articles_df["title"] + " " + articles_df["abstract"]).fillna("").tolist()
+    docs = (
+        articles_df["title"].fillna("")
+        + " "
+        + articles_df["abstract"].fillna("")
+    ).str.strip().tolist()
     print(f"Loaded articles: {articles_df.shape} |  Head: {articles_df.head(2)}")
 
     #EMBEDDING
@@ -105,10 +109,10 @@ def main():
     print("\nArticles similarity to aim:", summary_df.head())
 
     #UMAP
-    umap_model, cluster_embeddings, _, _, _, _ = umap_articles(
-    article_embeddings,
-    aim_embedding
-    )   
+    umap_model, cluster_embeddings, aim_cluster, _ = umap_articles(
+        article_embeddings,
+        aim_embedding,
+    )
     hdbscan_model_explore, cluster_labels = hdbscan_articles(cluster_embeddings)
     n_topics = len(set(cluster_labels)) - (1 if -1 in cluster_labels else 0)
     n_noise = (cluster_labels == -1).sum()

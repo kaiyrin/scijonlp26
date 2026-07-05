@@ -22,8 +22,11 @@ def umap_articles(article_embeddings, aim_embedding):  #code source https://umap
     aim_viz            = all_2d[-1]
     print(f"[UMAP] Cluster projection : {cluster_embeddings.shape}")
     print(f"[UMAP] Viz projection     : {viz_embeddings.shape}")
+    all_2d_df = pd.DataFrame(all_2d, columns=["UMAP1", "UMAP2"])
+    all_2d_df.to_csv("data/viz_embeddings_2d.csv", index=False)
+    print(f"[UMAP] Saved viz embeddings to data/viz_embeddings_2d.csv")
 
-    return reducer_5d, cluster_embeddings, aim_cluster, viz_embeddings, aim_viz, all_reduced_visualization
+    return reducer_5d, cluster_embeddings, aim_cluster, all_reduced_visualization
 
 
 def hdbscan_articles(cluster_embeddings): #https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html
@@ -62,7 +65,10 @@ if __name__ == "__main__":
 
     # Perform UMAP dimensionality reduction
     umap_result = umap_articles(article_embeddings, aim_embedding)
-    _, cluster_embeddings, aim_cluster, viz_embeddings, aim_viz, all_reduced_visualization = umap_result
+    _, cluster_embeddings, aim_cluster, all_reduced_visualization = umap_result
+
+    # Save viz embeddings and aim_viz to CSV
+   
 
     # Perform HDBSCAN clustering
     hdbscan_model, cluster_labels = hdbscan_articles(cluster_embeddings)
